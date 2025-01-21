@@ -3,13 +3,10 @@ import paramiko
 from threading import Thread
 from queue import Queue
 import time
+import json
 
 # デバイス情報のサンプル（IPアドレス、ユーザー名、パスワード）
-devices = [
-    {"name": "NEC IX", "host": "192.168.37.126", "username": "tk-ix", "password": "for_ansible"},
-    {"name": "containerlab", "host": "192.168.37.30", "username": "uc", "password": "ue3neCenter"},
-]
-
+devices = json.loads("device_map.json")
 SHELL_RETURN_BYTES = 65535
 
 
