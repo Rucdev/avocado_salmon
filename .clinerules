@@ -1,0 +1,56 @@
+# Abocad salmon
+
+SSHと使用したインタラクティブなターミナルのやり取りをチャットライクな形で出力するWebアプリケーションです。
+メインの言語はPythonです。
+Webアプリケーションを構成するフレームワークはStreamlitです。
+SSHのログを取得するために、paramikoを使用しています。
+
+## 機能について
+
+機能としては大きく分けて以下の2つです。
+
+- SSHセッションの開始
+- SSHログの取得
+  - SSHのログをDBに記録します。
+- SSHログの表示
+  - DBに記録されたSSHログをチャット形式にして表示します。
+
+## 機能のポイント
+
+チャットアプリケーションのようなルーム機能を持っているため、複数の論理的な区切りでログを取得することができます。
+また、1つのチャットルームでは複数のSSHセッションを同時並行で行うことができます。
+
+チャットルーム内に複数のSSHセッションがある場合、ユーザーが送信するコマンドは基本的にはブロードキャストで送信します。
+ただし、@登録名の形で相手を指定してユニキャストで送信することも可能です。
+この場合は必ず「@登録名」（これをメンションと呼びます。）が先頭にある必要があります。そしてコマンドはこのメンションからスペースで区切られた次の文字列がコマンドとして解釈されます。
+
+## DBスキーマ
+
+```mermaid
+erDiagram
+  DEVICE {
+    int id
+    varchar name
+    varchar ip_address
+    int port
+    varchar username
+    varchar password
+  }
+  ROOM {
+    int id
+    varchar name
+  }
+  SESSION {
+    int id
+    int device_id
+    int root_id
+  }
+  CHAT {
+    int id
+    int session_id
+    varchar message
+    datetime created_at
+  }
+
+```
+
