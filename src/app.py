@@ -8,7 +8,7 @@ from datetime import datetime
 import re
 
 # データベースファイルのパス
-DB_PATH = "avocado_salmon.db"
+DB_PATH = "db.sqlite3"
 
 # デバイス情報のサンプル（IPアドレス、ユーザー名、パスワード）
 with open("src/device_map.json") as f:
